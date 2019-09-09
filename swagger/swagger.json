@@ -1,0 +1,401 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "beego Test API",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://beego.me/",
+        "contact": {
+            "email": "astaxie@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/articles/": {
+            "put": {
+                "tags": [
+                    "articles"
+                ],
+                "description": "更新一篇文章",
+                "operationId": "ArticleController.UpdateArticle",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "文章具体内容",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/article_dto.ArticleInputDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int}"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "articles"
+                ],
+                "description": "创建一篇文章",
+                "operationId": "ArticleController.AddArticle",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "文章具体内容",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/article_dto.ArticleInputDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.Article.Id"
+                    }
+                }
+            }
+        },
+        "/articles/all": {
+            "get": {
+                "tags": [
+                    "articles"
+                ],
+                "description": "获取所有的文章",
+                "operationId": "ArticleController.GetAll",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "页码",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "title",
+                        "description": "标题",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "tag",
+                        "description": "标签",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/article_dto.ArticleListOutputDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/articles/{id}": {
+            "get": {
+                "tags": [
+                    "articles"
+                ],
+                "description": "通过id获取一篇文章",
+                "operationId": "ArticleController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "文章id参数",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/article_dto.ArticleOutputDto"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "articles"
+                ],
+                "description": "删除一篇文章",
+                "operationId": "ArticleController.DeleteArticle",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "文章id参数",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int}"
+                    }
+                }
+            }
+        },
+        "/uploads/": {
+            "post": {
+                "tags": [
+                    "uploads"
+                ],
+                "description": "文件上传",
+                "operationId": "UploadController.Post",
+                "parameters": [
+                    {
+                        "in": "form",
+                        "name": "fileUpload",
+                        "description": "文件上传的数据",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.FileUploadResult"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "description": "用户登录",
+                "operationId": "UserController.Login",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "用户登录内容",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user_dto.UserLoginInputDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{bool} true"
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "description": "用户注销",
+                "operationId": "UserController.logout",
+                "responses": {
+                    "200": {
+                        "description": "{bool} true"
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "description": "通过id用户基本信息",
+                "operationId": "UserController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/user_dto.UserInfoOutputDto"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "article_dto.ArticleInputDto": {
+            "title": "ArticleInputDto",
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "firstImg": {
+                    "type": "string"
+                },
+                "htmlContent": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "article_dto.ArticleListOutputDto": {
+            "title": "ArticleListOutputDto",
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "createDate": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "firstImage": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "article_dto.ArticleOutputDto": {
+            "title": "ArticleOutputDto",
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "createDate": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "firstImage": {
+                    "type": "string"
+                },
+                "htmlContent": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.FileUploadResult": {
+            "title": "FileUploadResult",
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "user_dto.UserInfoOutputDto": {
+            "title": "UserInfoOutputDto",
+            "type": "object",
+            "properties": {
+                "createDate": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "user_dto.UserLoginInputDto": {
+            "title": "UserLoginInputDto",
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "rememberMe": {
+                    "type": "boolean"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "users",
+            "description": "用户控制器\n"
+        },
+        {
+            "name": "articles",
+            "description": "文章控制器\n"
+        },
+        {
+            "name": "uploads",
+            "description": "文件上传控制器\n"
+        }
+    ]
+}
